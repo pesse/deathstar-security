@@ -84,6 +84,10 @@ create table log_messages (
 
 commit;
 
+create or replace package room_info as
+  function get_room_id( i_name varchar2 ) return integer;
+end;
+/
 
 -- Grants
 grant execute on room_info to public;
