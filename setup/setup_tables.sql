@@ -50,6 +50,7 @@ create table users
 insert into users values (1, 'Dark Admin');
 insert into users values (2, 'Trainee Sam');
 insert into users values (3, 'Editor JarJar');
+insert into users values (4, 'Rebel');
 
 create table roles
 (
