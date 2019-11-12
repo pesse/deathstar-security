@@ -83,6 +83,16 @@ create table log_messages (
   created timestamp default current_timestamp
 );
 
+create table log_201910 (
+  message varchar2(4000),
+  created timestamp default current_timestamp
+);
+
+create table log_201911 (
+  message varchar2(4000),
+  created timestamp default current_timestamp
+);
+
 commit;
 
 create or replace package room_info as

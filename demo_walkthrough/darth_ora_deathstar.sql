@@ -1,3 +1,16 @@
+/* 1. Update Injection: Poison a data-table */
+-- Vorstellung Tabellen
+
+select * from users;
+select * from roles;
+select * from user_roles;
+select * from deathstar_rooms;
+select * from user_room_access;
+
+--------------------------
+-- --> Continue Sabine
+--------------------------
+
 /* 2. Blind Injection */
 
 --package to get Room-name by ID
@@ -14,7 +27,7 @@ create or replace package body room_info as
     begin
       open c_curs for
         'select * from deathstar_rooms where lower(name) like lower(''%' || i_name || '%'')';
-
+--#Pause
       loop
 	      fetch c_curs into v_row;
 	      exit when c_curs%notfound or l_id is not null;
@@ -39,6 +52,8 @@ select room_info.get_room_id('''); drop table deathstar_rooms;--') from dual;
 /* 3. 2nd Order Attack */
 -- Verwaltungsscript
 create or replace package room_info as
+  function get_room_id( i_name varchar2 ) return integer;
+
 	procedure allow_room_access(
 		i_room_id simple_integer,
 		i_user_id simple_integer );
@@ -46,6 +61,25 @@ end;
 /
 
 create or replace package body room_info as
+  function get_room_id( i_name varchar2 ) return integer
+  as
+    c_curs sys_refcursor;
+    v_row deathstar_rooms%rowtype;
+    l_id integer;
+    begin
+      open c_curs for
+        'select * from deathstar_rooms where lower(name) like lower(''%' || i_name || '%'')';
+--#Pause
+      loop
+	      fetch c_curs into v_row;
+	      exit when c_curs%notfound or l_id is not null;
+	      dbms_output.put_line('Room found: ' || v_row.name);
+	      l_id := v_row.id;
+      end loop;
+
+      return l_id;
+    end;
+
   procedure allow_room_access(
     i_room_id simple_integer,
     i_user_id simple_integer )

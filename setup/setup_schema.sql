@@ -10,3 +10,5 @@ create user darth_dba identified by darth_dba default tablespace  users quota un
 
 grant connect to darth_dba;
 grant dba to darth_dba with admin option;
+
+-- TODO: Sabine-User
