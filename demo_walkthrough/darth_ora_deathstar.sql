@@ -1,15 +1,23 @@
 /* 1. Update Injection: Poison a data-table */
 -- Vorstellung Tabellen
 
+set echo on
 select * from users;
+
+#pause
 select * from roles;
+
+#pause
 select * from user_roles;
+
+#pause
 select * from deathstar_rooms;
 select * from user_room_access;
 
 --------------------------
 -- --> Continue Sabine
 --------------------------
+#pause
 
 /* 2. Blind Injection */
 
@@ -27,7 +35,7 @@ create or replace package body room_info as
     begin
       open c_curs for
         'select * from deathstar_rooms where lower(name) like lower(''%' || i_name || '%'')';
---#Pause
+#pause
       loop
 	      fetch c_curs into v_row;
 	      exit when c_curs%notfound or l_id is not null;
@@ -39,15 +47,19 @@ create or replace package body room_info as
     end;
 end;
 /
+#pause
 
 select room_info.get_room_id('Vader') from dual;
+#pause
 
 -- Funktioniert nicht, weil nur 1 Statement + Read-context
 select room_info.get_room_id('''); drop table deathstar_rooms;--') from dual;
+#pause
 
 --------------------------
 -- --> Continue Sabine
 --------------------------
+#pause
 
 /* 3. 2nd Order Attack */
 -- Verwaltungsscript
@@ -59,6 +71,7 @@ create or replace package room_info as
 		i_user_id simple_integer );
 end;
 /
+#pause
 
 create or replace package body room_info as
   function get_room_id( i_name varchar2 ) return integer
@@ -69,7 +82,6 @@ create or replace package body room_info as
     begin
       open c_curs for
         'select * from deathstar_rooms where lower(name) like lower(''%' || i_name || '%'')';
---#Pause
       loop
 	      fetch c_curs into v_row;
 	      exit when c_curs%notfound or l_id is not null;
@@ -103,16 +115,20 @@ create or replace package body room_info as
     end;
 end;
 /
+#pause
 
 --------------------------
 -- --> Continue Sabine
 --------------------------
-
+#pause
 
 /* 4. Invoker's rights  */
+#pause
 --------------------------
 -- --> AS DARTH_DBA
 --------------------------
+connect darth_dba/darth_dba@localhost:1522/ORCLPDB1
+#pause
 create user sabine identified by sabine  default tablespace users quota unlimited on users;
 grant connect to sabine;
 grant resource to sabine;
@@ -120,12 +136,14 @@ grant resource to sabine;
 --------------------------
 -- --> Continue Sabine
 --------------------------
-
+#pause
 /* 5. Variable Poisoning */
 --------------------------
 -- --> AS DEATHSTAR
 --------------------------
 
+connect deathstar/deathstar@localhost:1522/ORCLPDB1
+#pause
 create or replace package pkg_control as
 
   v_user integer;
@@ -136,7 +154,7 @@ create or replace package pkg_control as
 
 end;
 /
-
+#pause
 create or replace package body pkg_control as
 
   function get_user return number
@@ -170,13 +188,13 @@ begin -- init des Packages
   end if;
 end;
 /
-
+#pause
 begin
   dbms_output.put_line( 'User-ID: ' || pkg_control.get_user );
   dbms_output.put_line( 'User-ROLE: ' || pkg_control.get_user_role );
 end;
 /
-
+#pause
 -- Exploit! Public User-Variable
 begin
   pkg_control.v_user := 1;
@@ -184,7 +202,7 @@ begin
   dbms_output.put_line( 'User-ROLE: ' || pkg_control.get_user_role );
 end;
 /
-
+#pause
 -- Kann mit PL/SCOPE gefunden werden
 ALTER SESSION SET PLSCOPE_SETTINGS='IDENTIFIERS:ALL, STATEMENTS:ALL';
 
@@ -193,13 +211,13 @@ begin
   DBMS_UTILITY.compile_schema(schema => 'DEATHSTAR', compile_all => true);
 end;
 /
-
+#pause
 select *
 	from user_identifiers
 	where object_type = 'PACKAGE'
 		and usage = 'DECLARATION'
 		and type = 'VARIABLE';
-
+#pause
 
 -- Fix it!
 create or replace package pkg_control as
@@ -210,7 +228,7 @@ create or replace package pkg_control as
 
 end;
 /
-
+#pause
 create or replace package body pkg_control as
 
   v_user integer;
@@ -221,7 +239,7 @@ create or replace package body pkg_control as
   begin
     return v_user;
   end get_user ;
-
+#pause
   function get_user_role return varchar2
   as
     v_role_name roles.role_name%TYPE;
@@ -246,19 +264,20 @@ begin -- init des Packages
   end if;
 end;
 /
-
+#pause
 -- Check mit PL/SCOPE
 select *
 	from user_identifiers
 	where object_type = 'PACKAGE'
 		and usage = 'DECLARATION'
 		and type = 'VARIABLE';
-
+#pause
 begin
   dbms_output.put_line( 'User-ID: ' || pkg_control.get_user );
   dbms_output.put_line( 'User-ROLE: ' || pkg_control.get_user_role );
 end;
 /
+#pause
 
 /* 6. Collation Attack */
 create or replace function is_admin( i_username varchar2 )
@@ -272,24 +291,25 @@ as
 		end if;
 	end;
 /
-
+#pause
 grant execute on is_admin to public;
-
 --------------------------
 -- --> Continue Sabine
 --------------------------
-
+#pause
 
 
 --------------------------
 -- --> AS DARTH_DBA
 --------------------------
+connect darth_dba/darth_dba@localhost:1522/ORCLPDB1
+
 grant administer database trigger to sabine;
 
 --------------------------
 -- --> Continue Sabine
 --------------------------
-
+#pause
 
 /* 7. Synonym Attack */
 --------------------------
@@ -304,6 +324,7 @@ grant create any synonym to sabine;
 --------------------------
 -- --> Continue Sabine
 --------------------------
+#pause
 
 declare
   l_room_id integer;
@@ -317,3 +338,4 @@ end;
 --------------------------
 -- --> Continue Sabine
 --------------------------
+#pause
