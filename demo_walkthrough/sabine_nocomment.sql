@@ -1,3 +1,8 @@
+set linesize 111
+set pagesize 1000
+set trimout on
+column name format a30
+column code format a60
 #pause
 set echo on
 
