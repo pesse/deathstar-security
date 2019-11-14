@@ -37,10 +37,10 @@ create or replace package body room_info as
       open c_curs for
         'select * from deathstar_rooms where lower(name) like lower(''%' || i_name || '%'')';
       loop
-	      fetch c_curs into v_row;
-	      exit when c_curs%notfound or l_id is not null;
-	      dbms_output.put_line('Room found: ' || v_row.name);
-	      l_id := v_row.id;
+        fetch c_curs into v_row;
+        exit when c_curs%notfound or l_id is not null;
+        dbms_output.put_line('Room found: ' || v_row.name);
+        l_id := v_row.id;
       end loop;
 
       return l_id;
@@ -66,9 +66,9 @@ select room_info.get_room_id('''); drop table deathstar_rooms;--') from dual;
 create or replace package room_info as
   function get_room_id( i_name varchar2 ) return integer;
 
-	procedure allow_room_access(
-		i_room_id simple_integer,
-		i_user_id simple_integer );
+  procedure allow_room_access(
+    i_room_id simple_integer,
+    i_user_id simple_integer );
 end;
 /
 #pause
@@ -83,10 +83,10 @@ create or replace package body room_info as
       open c_curs for
         'select * from deathstar_rooms where lower(name) like lower(''%' || i_name || '%'')';
       loop
-	      fetch c_curs into v_row;
-	      exit when c_curs%notfound or l_id is not null;
-	      dbms_output.put_line('Room found: ' || v_row.name);
-	      l_id := v_row.id;
+        fetch c_curs into v_row;
+        exit when c_curs%notfound or l_id is not null;
+        dbms_output.put_line('Room found: ' || v_row.name);
+        l_id := v_row.id;
       end loop;
 
       return l_id;
@@ -225,10 +225,10 @@ end;
 /
 #pause
 select *
-	from user_identifiers
-	where object_type = 'PACKAGE'
-		and usage = 'DECLARATION'
-		and type = 'VARIABLE';
+  from user_identifiers
+  where object_type = 'PACKAGE'
+    and usage = 'DECLARATION'
+    and type = 'VARIABLE';
 #pause
 
 -- Fix it!
@@ -279,10 +279,10 @@ end;
 #pause
 -- Check mit PL/SCOPE
 select *
-	from user_identifiers
-	where object_type = 'PACKAGE'
-		and usage = 'DECLARATION'
-		and type = 'VARIABLE';
+  from user_identifiers
+  where object_type = 'PACKAGE'
+    and usage = 'DECLARATION'
+    and type = 'VARIABLE';
 #pause
 begin
   dbms_output.put_line( 'User-ID: ' || pkg_control.get_user );
@@ -296,12 +296,12 @@ create or replace function is_admin( i_username varchar2 )
  return integer
 as
   begin
-	  if ( i_username = 'ADMIN') then
+    if ( i_username = 'ADMIN') then
       return 1;
     else
-	    return 0;
-		end if;
-	end;
+      return 0;
+    end if;
+  end;
 /
 #pause
 grant execute on is_admin to public;
@@ -341,8 +341,8 @@ grant create any synonym to sabine;
 declare
   l_room_id integer;
 begin
-	l_room_id := deathstar.room_info.get_room_id('Vader');
-	dbms_output.put_line('ID: ' || l_room_id);
+  l_room_id := deathstar.room_info.get_room_id('Vader');
+  dbms_output.put_line('ID: ' || l_room_id);
 end;
 /
 -- Funktioniert doch...

