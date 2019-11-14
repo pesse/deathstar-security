@@ -7,3 +7,5 @@ drop user sabine cascade;
 delete from deathstar.user_roles where id_user = 4;
 update deathstar.deathstar_rooms set code = 'VADER' where id = 2;
 commit;
+
+truncate table deathstar.log_201911;

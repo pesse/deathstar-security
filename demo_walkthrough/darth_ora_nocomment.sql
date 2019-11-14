@@ -3,6 +3,8 @@ set pagesize 1000
 set trimout on
 column name format a30
 column code format a60
+column variable_name format a30
+column package_name format a30
 #pause
 set echo on
 select * from users;
@@ -202,7 +204,7 @@ begin
 end;
 /
 #pause
-select *
+select name variable_name, object_name package_name, line
   from user_identifiers
   where object_type = 'PACKAGE'
     and usage = 'DECLARATION'
@@ -255,7 +257,7 @@ end;
 /
 #pause
 
-select *
+select name variable_name, object_name package_name, line
   from user_identifiers
   where object_type = 'PACKAGE'
     and usage = 'DECLARATION'
@@ -280,6 +282,12 @@ as
   end;
 /
 #pause
+
+select is_admin('ADMIN') from dual;
+
+select is_admin('User') from dual;
+#pause
+
 grant execute on is_admin to public;
 
 #pause/**/
@@ -294,6 +302,7 @@ grant create any synonym to sabine;
 
 #pause/**/
 
+set serveroutput on
 declare
   l_room_id integer;
 begin

