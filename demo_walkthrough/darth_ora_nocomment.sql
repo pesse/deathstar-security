@@ -14,7 +14,7 @@ select * from user_room_access;
 
 #pause
 
-#pause--*
+#pause/**/
 
 create or replace package room_info as
   function get_room_id( i_name varchar2 ) return integer;
@@ -47,7 +47,7 @@ select room_info.get_room_id('Vader') from dual;
 #pause
 
 select room_info.get_room_id('''); drop table deathstar_rooms;--') from dual;
-#pause --*
+#pause /**/
 
 create or replace package room_info as
   function get_room_id( i_name varchar2 ) return integer;
@@ -103,7 +103,7 @@ end;
 /
 #pause
 
-#pause--*
+#pause/**/
 
 /* Definer's and Invoker's rights  */
 #pause
@@ -113,7 +113,7 @@ create user sabine identified by sabine  default tablespace users quota unlimite
 grant connect to sabine;
 grant resource to sabine;
 
-#pause--*
+#pause/**/
 
 connect deathstar/deathstar@localhost:1522/ORCLPDB1
 #pause
@@ -277,17 +277,17 @@ as
 #pause
 grant execute on is_admin to public;
 
-#pause--*
+#pause/**/
 
 connect darth_dba/darth_dba@localhost:1522/ORCLPDB1
 
 grant administer database trigger to sabine;
 
-#pause--*
+#pause/**/
 
 grant create any synonym to sabine;
 
-#pause--*
+#pause/**/
 
 declare
   l_room_id integer;
@@ -296,4 +296,4 @@ begin
   dbms_output.put_line('ID: ' || l_room_id);
 end;
 /
-#pause--*
+#pause/**/

