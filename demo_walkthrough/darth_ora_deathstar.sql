@@ -1,6 +1,6 @@
 /* 1. Update Injection: Poison a data-table */
 -- Vorstellung Tabellen
-
+#pause
 set echo on
 select * from users;
 
@@ -26,6 +26,7 @@ create or replace package room_info as
   function get_room_id( i_name varchar2 ) return integer;
 end;
 /
+#pause
 create or replace package body room_info as
   function get_room_id( i_name varchar2 ) return integer
   as
@@ -35,7 +36,6 @@ create or replace package body room_info as
     begin
       open c_curs for
         'select * from deathstar_rooms where lower(name) like lower(''%' || i_name || '%'')';
-#pause
       loop
 	      fetch c_curs into v_row;
 	      exit when c_curs%notfound or l_id is not null;
@@ -189,6 +189,18 @@ begin -- init des Packages
 end;
 /
 #pause
+create or replace package pkg_control as
+
+  v_user integer;
+
+  function get_user return number;
+
+  function get_user_role return varchar2;
+
+end;
+/
+#pause
+set serveroutput on
 begin
   dbms_output.put_line( 'User-ID: ' || pkg_control.get_user );
   dbms_output.put_line( 'User-ROLE: ' || pkg_control.get_user_role );
