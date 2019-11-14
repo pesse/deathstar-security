@@ -229,6 +229,13 @@ create synonym darth_dba.dbms_output for malicious_dbms_output;
 -- User: Deathstar - Da funktioniert nichts, aber es wird auch nichts bemerkt
 select deathstar.room_info.get_room_id('Vader') from dual;
 #pause
+--     _____                                             __     __)
+--    (, /  |              . .    /)                    (, /|  /|
+--     ./-- | ___     __   _   _ (/   _  _/_  _ __        / | / |  _____  _    _ __
+--   ) /    |_// (_   / (_(_(_(__/ )_/_)_(___(/_/ (_   ) /  |/  |_(_)/ (_(_/__(/_/ (_
+--  (_/                                               (_/   '           .-/
+--                                                                     (_/
+
 -- Hey DBA - etwas funktioniert mit dem get_room_id nicht...
 --------------------------
 -- --> Continue Darth Ora
