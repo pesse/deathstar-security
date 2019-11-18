@@ -7,6 +7,11 @@ column variable_name format a30
 column package_name format a30
 #pause
 set echo on
+--------------------------------------------------------------------------------------------------------
+-- Episode 1: Die APEX-Bedrohung
+--------------------------------------------------------------------------------------------------------
+
+#pause
 select * from users;
 
 #pause
@@ -16,12 +21,19 @@ select * from roles;
 select * from user_roles;
 
 #pause
+cl scr
 select * from deathstar_rooms;
 select * from user_room_access;
 
 #pause
 
 #pause/**/
+cl scr
+--------------------------------------------------------------------------------------------------------
+-- Episode 2: Angriff der Blind-Injections
+--------------------------------------------------------------------------------------------------------
+
+#pause
 
 create or replace package room_info as
   function get_room_id( i_name varchar2 ) return integer;
@@ -49,12 +61,17 @@ create or replace package body room_info as
 end;
 /
 #pause
-
+cl scr
 select room_info.get_room_id('Vader') from dual;
 #pause
 
 select room_info.get_room_id('''); drop table deathstar_rooms;--') from dual;
 #pause /**/
+cl scr
+--------------------------------------------------------------------------------------------------------
+-- Episode 3: Die Rache des Room-Codes
+--------------------------------------------------------------------------------------------------------
+#pause
 
 create or replace package room_info as
   function get_room_id( i_name varchar2 ) return integer;
@@ -109,21 +126,31 @@ create or replace package body room_info as
 end;
 /
 #pause
+cl scr
 
 #pause/**/
 
-/* Definer's and Invoker's rights  */
+--------------------------------------------------------------------------------------------------------
+-- Episode 4: Invoker’s Hoffnung
+--------------------------------------------------------------------------------------------------------
+
 #pause
 connect darth_dba/darth_dba@localhost:1522/ORCLPDB1
 #pause
+cl scr
 create user sabine identified by sabine  default tablespace users quota unlimited on users;
 grant connect to sabine;
 grant resource to sabine;
 
 #pause/**/
+cl scr
+--------------------------------------------------------------------------------------------------------
+-- Episode 5: Der Admin schlägt zurück
+--------------------------------------------------------------------------------------------------------
 
 connect deathstar/deathstar@localhost:1522/ORCLPDB1
 #pause
+cl scr
 
 create or replace package pkg_control as
 
@@ -144,7 +171,7 @@ create or replace package body pkg_control as
   begin
     return v_user;
   end get_user ;
-
+#pause
   function get_user_role return varchar2
   as
     v_role_name roles.role_name%TYPE;
@@ -157,7 +184,7 @@ create or replace package body pkg_control as
 
     return v_role_name;
   end get_user_role;
-
+#pause
 begin -- init des Packages
   if v_user is null then
     case sys_context('USERENV', 'SESSION_USER')
@@ -170,6 +197,7 @@ begin -- init des Packages
 end;
 /
 #pause
+cl scr
 create or replace package pkg_control as
 
   v_user integer;
@@ -181,6 +209,7 @@ create or replace package pkg_control as
 end;
 /
 #pause
+cl scr
 set serveroutput on
 begin
   dbms_output.put_line( 'User-ID: ' || pkg_control.get_user );
@@ -188,7 +217,7 @@ begin
 end;
 /
 #pause
-
+cl scr
 begin
   pkg_control.v_user := 1;
   dbms_output.put_line( 'User-ID: ' || pkg_control.get_user );
@@ -196,7 +225,7 @@ begin
 end;
 /
 #pause
-
+cl scr
 ALTER SESSION SET PLSCOPE_SETTINGS='IDENTIFIERS:ALL, STATEMENTS:ALL';
 
 begin
@@ -204,13 +233,14 @@ begin
 end;
 /
 #pause
+cl scr
 select name variable_name, object_name package_name, line
   from user_identifiers
   where object_type = 'PACKAGE'
     and usage = 'DECLARATION'
     and type = 'VARIABLE';
 #pause
-
+cl scr
 create or replace package pkg_control as
 
   function get_user return number;
@@ -256,19 +286,24 @@ begin -- init des Packages
 end;
 /
 #pause
-
+cl scr
 select name variable_name, object_name package_name, line
   from user_identifiers
   where object_type = 'PACKAGE'
     and usage = 'DECLARATION'
     and type = 'VARIABLE';
 #pause
+cl scr
 begin
   dbms_output.put_line( 'User-ID: ' || pkg_control.get_user );
   dbms_output.put_line( 'User-ROLE: ' || pkg_control.get_user_role );
 end;
 /
 #pause
+cl scr
+--------------------------------------------------------------------------------------------------------
+-- Episode 6: Die Rückkehr des Social Engineers
+--------------------------------------------------------------------------------------------------------
 
 create or replace function is_admin( i_username varchar2 )
  return integer
@@ -282,26 +317,29 @@ as
   end;
 /
 #pause
+cl scr
 
 select is_admin('ADMIN') from dual;
 
 select is_admin('User') from dual;
 #pause
-
+cl scr
 grant execute on is_admin to public;
 
 #pause/**/
+cl scr
 
 connect darth_dba/darth_dba@localhost:1522/ORCLPDB1
 
 grant administer database trigger to sabine;
 
 #pause/**/
+cl scr
 
 grant create any synonym to sabine;
 
 #pause/**/
-
+cl scr
 set serveroutput on
 declare
   l_room_id integer;
