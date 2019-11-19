@@ -4,8 +4,9 @@ set trimout on
 column name format a30
 column code format a60
 column USERNAME format a30
+column USER_NAME format a30
 column GRANTED_ROLE format a30
-column SECRET format a30
+column SECRET format a50
 column CREATED format a30
 column MESSAGE format a60
 alter session set nls_date_format='dd.MM.yyyy hh:mi:ss';
@@ -29,7 +30,8 @@ select deathstar.room_info.get_room_id(''') and exists(select 1 from imperial_se
 /* Wird zu:
 select * from deathstar_rooms
    where lower(name) like lower('%')
-   and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = 'a') --
+   and exists(select 1 from imperial_secrets where id = 1
+     and lower(substr(secret, 1, 1)) = 'a') --
  */
 #pause
 select deathstar.room_info.get_room_id(''') and exists(select 1 from imperial_secrets where id = 1 and lower(substr(secret, 1, 1)) = ''b'') --') result from dual;
@@ -94,7 +96,9 @@ cl scr
 execute immediate '
   begin
     insert into ' || dbms_assert.simple_sql_name(l_log_table) || ' ( message )
-      values (''User ' || i_user_id || ' has now access to room ' || l_room_code || ''');
+      values (''User ' || i_user_id ||
+      ' has now access to room ' || l_room_code || ''');
+ */
   end;
 ';
  */
