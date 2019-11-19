@@ -120,14 +120,16 @@ create or replace package body room_info as
       insert into user_room_access ( id_user, id_room )
         select i_user_id, i_room_id
           from dual
-          where (i_user_id, i_room_id) not in (select id_user, id_room from user_room_access);
-
+          where (i_user_id, i_room_id) not in (
+            select id_user, id_room from user_room_access);
+#pause
       -- Logging: We need dyn. sql
       select code into l_room_code from deathstar_rooms where id = i_room_id;
       execute immediate '
         begin
           insert into ' || dbms_assert.simple_sql_name(l_log_table) || ' ( message )
-            values (''User ' || i_user_id || ' has now access to room ' || l_room_code || ''');
+            values (''User ' || i_user_id ||
+            ' has now access to room ' || l_room_code || ''');
         end;
       ';
     end;
@@ -143,7 +145,7 @@ cl scr
 ------------------------------------------------------------------------------------
 
 #pause
-connect darth_dba/darth_dba@localhost:1522/ORCLPDB1
+connect darth_dba/darth_dba
 #pause
 cl scr
 create user sabine identified by sabine  default tablespace users quota unlimited on users;
@@ -156,7 +158,7 @@ cl scr
 -- Episode 5: Der Admin schlägt zurück
 ------------------------------------------------------------------------------------
 
-connect deathstar/deathstar@localhost:1522/ORCLPDB1
+connect deathstar/deathstar
 #pause
 cl scr
 
@@ -337,7 +339,7 @@ grant execute on is_admin to public;
 #pause/**/
 cl scr
 
-connect darth_dba/darth_dba@localhost:1522/ORCLPDB1
+connect darth_dba/darth_dba
 
 grant administer database trigger to sabine;
 

@@ -1,0 +1,3 @@
+chcp 65001
+$env:NLS_LANG="GERMAN_GERMANY.UTF8"
+$env:LOCAL="localhost:1522/ORCLPDB1"
