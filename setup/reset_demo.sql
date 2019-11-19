@@ -5,6 +5,7 @@ drop synonym darth_dba.dbms_output;
 drop user sabine cascade;
 
 truncate table deathstar.log_201911;
+truncate table deathstar.imperial_secrets;
 
 -- Reset Data
 
@@ -32,4 +33,8 @@ insert into deathstar.deathstar_rooms (id, name, code ) values (2, 'Vaders Chamb
 insert into deathstar.deathstar_rooms (id, name, code ) values (3, 'Bridge', 'BRIDGE' );
 insert into deathstar.deathstar_rooms (id, name, code ) values (4, 'Prison 1', 'PRISON1' );
 
+
+insert into deathstar.imperial_secrets (id, secret ) values (1, 'Vader is Lukes father');
+insert into deathstar.imperial_secrets (id, secret ) values (2, 'The real, secret sith master is Jar Jar Binks');
+insert into deathstar.imperial_secrets (id, secret ) values (3, 'The Imperium has no cookies');
 commit;

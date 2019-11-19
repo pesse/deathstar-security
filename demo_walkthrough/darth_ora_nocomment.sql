@@ -56,7 +56,8 @@ create or replace package body room_info as
     l_id integer;
     begin
       open c_curs for
-        'select * from deathstar_rooms where lower(name) like lower(''%' || i_name || '%'')';
+        'select * from deathstar_rooms
+        where lower(name) like lower(''%' || i_name || '%'')';
       loop
         fetch c_curs into v_row;
         exit when c_curs%notfound or l_id is not null;
@@ -139,7 +140,7 @@ end;
 cl scr
 
 #pause/**/
-
+cl scr
 ------------------------------------------------------------------------------------
 -- Episode 4: Invoker’s Hoffnung
 ------------------------------------------------------------------------------------
@@ -314,7 +315,7 @@ cl scr
 ------------------------------------------------------------------------------------
 -- Episode 6: Die Rückkehr des Social Engineers
 ------------------------------------------------------------------------------------
-
+#pause
 create or replace function is_admin( i_username varchar2 )
  return integer
 as
