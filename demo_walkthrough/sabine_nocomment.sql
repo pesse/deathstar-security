@@ -98,7 +98,6 @@ execute immediate '
     insert into ' || dbms_assert.simple_sql_name(l_log_table) || ' ( message )
       values (''User ' || i_user_id ||
       ' has now access to room ' || l_room_code || ''');
- */
   end;
 ';
  */
