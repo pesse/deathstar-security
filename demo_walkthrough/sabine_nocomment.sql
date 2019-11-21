@@ -77,6 +77,7 @@ begin
       dbms_output.put_line(sqlerrm);
   end;
   dbms_output.put_line('Secret: ' || l_secret);
+#pause
 end;
 /
 #pause
@@ -170,7 +171,7 @@ cl scr
 ------------------------------------------------------------------------------------
 
 ALTER SESSION SET NLS_SORT = BINARY_AI NLS_COMP = LINGUISTIC;
-
+#pause
 select deathstar.is_admin('aDMIN') from dual;
 select deathstar.is_admin('Ädmin') from dual;
 
