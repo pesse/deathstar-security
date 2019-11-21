@@ -88,7 +88,7 @@ cl scr
 ------------------------------------------------------------------------------------
 
 connect deathstar/deathstar
-cl scr
+
 select code from deathstar.deathstar_rooms;
 #pause
 cl scr
