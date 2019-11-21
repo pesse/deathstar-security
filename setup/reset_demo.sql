@@ -35,6 +35,6 @@ insert into deathstar.deathstar_rooms (id, name, code ) values (4, 'Prison 1', '
 
 
 insert into deathstar.imperial_secrets (id, secret ) values (1, 'Vader is Lukes father');
-insert into deathstar.imperial_secrets (id, secret ) values (2, 'The real, secret sith master is Jar Jar Binks');
-insert into deathstar.imperial_secrets (id, secret ) values (3, 'The Imperium has no cookies');
+insert into deathstar.imperial_secrets (id, secret ) values (2, 'The real, secret Sith master is Jar Jar Binks');
+insert into deathstar.imperial_secrets (id, secret ) values (3, 'The Empire has no cookies');
 commit;
