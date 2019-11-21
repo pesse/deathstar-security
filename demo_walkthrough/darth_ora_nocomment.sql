@@ -34,6 +34,9 @@ select * from deathstar_rooms;
 select * from user_room_access;
 
 #pause
+desc imperial_secrets;
+
+#pause
 
 #pause/**/
 cl scr
