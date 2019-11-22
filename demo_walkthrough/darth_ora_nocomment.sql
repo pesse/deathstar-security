@@ -354,12 +354,12 @@ grant create any synonym to sabine;
 
 #pause/**/
 cl scr
-set serveroutput on
 declare
   l_room_id integer;
 begin
-  l_room_id := deathstar.room_info.get_room_id('Vader');
+  l_room_id := deathstar.room_info.get_room_id('Jar Jars Badewanne');
   dbms_output.put_line('ID: ' || l_room_id);
 end;
 /
+-- ID: NULL
 #pause/**/

@@ -196,7 +196,7 @@ cl scr
 ------------------------------------------------------------------------------------
 -- Episode 7: Das Erwachen des Rebellen-DBAs
 ------------------------------------------------------------------------------------
-
+#pause
 connect sabine/sabine
 
 create or replace package malicious_dbms_output authid current_user as
